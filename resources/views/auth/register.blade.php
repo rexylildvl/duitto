@@ -79,6 +79,7 @@
                 </h1>
 
                 <form method="POST" action="{{ route('register') }}" class="form-box w-100">
+                    @csrf
                     <div class="mb-3">
                         <input type="text" name="username" class="form-control" placeholder="Username" required>
                     </div>

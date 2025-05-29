@@ -1,19 +1,32 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Transaksi;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $totalPemasukan = Transaksi::where('tipe', 'pemasukan')->sum('jumlah') ?? 0;
+        $totalPengeluaran = Transaksi::where('tipe', 'pengeluaran')->sum('jumlah') ?? 0;
+        $totalTagihan = Transaksi::where('tipe', 'tagihan')->sum('jumlah') ?? 0;
+        $totalTabungan = Transaksi::where('tipe', 'tabungan')->sum('jumlah') ?? 0;
 
-        // Total income, expense, balance
-        $income = $user->transactions()->where('type', 'income')->sum('amount');
-        $expense = $user->transactions()->where('type', 'expense')->sum('amount');
-        $balance = $income - $expense;
+        $saldo = $totalPemasukan - ($totalPengeluaran + $totalTagihan + $totalTabungan);
 
-        // Savings
-        $saving = $user->savings()->first(); // Satu contoh saving
+        $targetTabungan = 10000000; // bisa dari DB, default jika tidak ada
 
-        return view('dashboard', compact('user', 'income', 'expense', 'balance', 'saving'));
+        return view('dashboard', compact(
+            'saldo', 'totalPemasukan', 'totalPengeluaran',
+            'totalTagihan', 'totalTabungan', 'targetTabungan'
+        ));
+    }
+
+    public function store(Request $request)
+    {
+        Transaksi::create($request->all());
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
     }
 }
