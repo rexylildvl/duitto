@@ -83,6 +83,7 @@
                 </h1>
 
                 <form method="POST" action="{{ route('login') }}" class="form-box w-100">
+                    @csrf
                     <div class="mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email" required>
                     </div>
