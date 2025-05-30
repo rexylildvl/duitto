@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\{LoginController, RegisterController};
-use App\Http\Controllers\{DashboardController, TransaksiController};
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TabunganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,14 +41,12 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-    
-    // Transactions
-    Route::controller(TransaksiController::class)->group(function () {
-        Route::get('/transaksi', 'index')->name('transaksi.index');
-        Route::get('/transaksi/create', 'create')->name('transaksi.create');
-        Route::post('/transaksi', 'store')->name('transaksi.store');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 });
+
+Route::get('/transaksi', [TransaksiController::class, 'create'])->name('transaksi.create');
+Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+
+Route::get('/tabungan', [TabunganController::class, 'index'])->name('tabungan.index');
+Route::get('/tabungan', [TransaksiController::class, 'tabunganIndex'])->name('tabungan.index');

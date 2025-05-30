@@ -7,6 +7,19 @@ use Illuminate\Support\Facades\Session;
 
 class TransaksiController extends Controller
 {
+    // Tampilkan form tambah transaksi + daftar transaksi
+    public function create()
+    {
+        return view('transaksi.create', [
+            'pemasukanList' => Session::get('pemasukan_list', []),
+            'pengeluaranList' => Session::get('pengeluaran_list', []),
+            'tagihanList' => Session::get('tagihan_list', []),
+            'tabunganList' => Session::get('tabungan_list', []),
+            'saldo' => Session::get('saldo', 0),
+        ]);
+    }
+
+    // Menyimpan data transaksi
     public function store(Request $request)
     {
         $request->validate([
@@ -17,37 +30,55 @@ class TransaksiController extends Controller
         $tipe = $request->tipe;
         $jumlah = $request->jumlah;
 
+        // Ambil data dari session
         $saldo = Session::get('saldo', 0);
-        $pemasukan = Session::get('pemasukan', 0);
-        $pengeluaran = Session::get('pengeluaran', 0);
-        $tabungan = Session::get('tabungan', 0);
-        $tagihan = Session::get('tagihan', 0);
+        $pemasukanList = Session::get('pemasukan_list', []);
+        $pengeluaranList = Session::get('pengeluaran_list', []);
+        $tagihanList = Session::get('tagihan_list', []);
+        $tabunganList = Session::get('tabungan_list', []);
+
+        $entry = [
+            'jumlah' => $jumlah,
+            'waktu' => now()->toDateTimeString(),
+        ];
 
         switch ($tipe) {
             case 'pemasukan':
                 $saldo += $jumlah;
-                $pemasukan += $jumlah;
+                $pemasukanList[] = $entry;
+                Session::put('pemasukan_list', $pemasukanList);
                 break;
+
             case 'pengeluaran':
                 $saldo -= $jumlah;
-                $pengeluaran += $jumlah;
+                $pengeluaranList[] = $entry;
+                Session::put('pengeluaran_list', $pengeluaranList);
                 break;
+
             case 'tagihan':
                 $saldo -= $jumlah;
-                $tagihan += $jumlah;
+                $tagihanList[] = $entry;
+                Session::put('tagihan_list', $tagihanList);
                 break;
+
             case 'tabungan':
                 $saldo -= $jumlah;
-                $tabungan += $jumlah;
+                $tabunganList[] = $entry;
+                Session::put('tabungan_list', $tabunganList);
                 break;
         }
 
         Session::put('saldo', $saldo);
-        Session::put('pemasukan', $pemasukan);
-        Session::put('pengeluaran', $pengeluaran);
-        Session::put('tabungan', $tabungan);
-        Session::put('tagihan', $tagihan);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('transaksi.create')->with('success', 'Transaksi berhasil ditambahkan.');
+    }
+
+    // Opsional: menampilkan daftar tabungan saja
+    public function tabunganIndex()
+    {
+        $tabunganList = Session::get('tabungan_list', []);
+        $saldo = Session::get('saldo', 0);
+
+        return view('tabungan.index', compact('tabunganList', 'saldo'));
     }
 }

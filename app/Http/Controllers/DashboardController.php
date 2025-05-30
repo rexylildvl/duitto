@@ -8,21 +8,22 @@ use App\Models\Transaksi;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        $totalPemasukan = Transaksi::where('tipe', 'pemasukan')->sum('jumlah') ?? 0;
-        $totalPengeluaran = Transaksi::where('tipe', 'pengeluaran')->sum('jumlah') ?? 0;
-        $totalTagihan = Transaksi::where('tipe', 'tagihan')->sum('jumlah') ?? 0;
-        $totalTabungan = Transaksi::where('tipe', 'tabungan')->sum('jumlah') ?? 0;
+{
+    $dataPemasukan = session('riwayat', collect([]))->where('tipe', 'pemasukan');
+    $dataPengeluaran = session('riwayat', collect([]))->where('tipe', 'pengeluaran');
+    $dataTagihan = session('riwayat', collect([]))->where('tipe', 'tagihan');
+    $totalTabungan = session('tabungan', 0);
+    $saldo = session('saldo', 0);
 
-        $saldo = $totalPemasukan - ($totalPengeluaran + $totalTagihan + $totalTabungan);
+    return view('dashboard', compact(
+        'dataPemasukan',
+        'dataPengeluaran',
+        'dataTagihan',
+        'totalTabungan',
+        'saldo'
+    ));
+}
 
-        $targetTabungan = 10000000; // bisa dari DB, default jika tidak ada
-
-        return view('dashboard', compact(
-            'saldo', 'totalPemasukan', 'totalPengeluaran',
-            'totalTagihan', 'totalTabungan', 'targetTabungan'
-        ));
-    }
 
     public function store(Request $request)
     {

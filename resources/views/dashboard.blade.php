@@ -1,132 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duitto Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    body {
-      background-color: #2d2346;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      background-color: #f9d7d7;
-      color: #000;
-      border-radius: 1rem;
-    }
-    .money-title {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .sidebar {
-      background-color: #1e1b36;
-      height: 100vh;
-    }
-    .sidebar .nav-link {
-      color: #fff;
-    }
-    .sidebar .nav-link:hover {
-      color: #ffc107;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Dashboard - Duitto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #2D3250;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+        .highlight {
+            background: linear-gradient(to right, #fdb88d, white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        .card {
+            background-color: #3e446a;
+            border: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .btn-peach {
+            background-color: #fdb88d;
+            color: #2D3250;
+            font-weight: bold;
+            border-radius: 1rem;
+        }
+        .btn-peach:hover {
+            background-color: #fab07f;
+        }
+        .sidebar {
+            background-color: #3e446a;
+            height: 100vh;
+            padding-top: 2rem;
+            position: fixed;
+            width: 220px;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #2D3250;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2rem;
+        }
+        .logo img {
+            width: 40px;
+        }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #fdb88d, white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .money-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-2 sidebar d-flex flex-column p-3">
-      <h4 class="text-center">🦆</h4>
-      <a href="#" class="nav-link">Dashboard</a>
-      <a href="#" class="nav-link">Transaksi</a>
-      <a href="#" class="nav-link">Tabungan</a>
-    </div>
-
-    <!-- Content -->
-    <div class="col-md-10 p-4">
-  <h2>Hello, Zuzu Sipa Raia!</h2>
-  <p>Ready to make smart money moves today? You're one step closer to financial freedom 🚀</p>
-
-  <h4 class="mt-4">Here's your money snapshot!</h4>
-
-  <div class="row g-4 mt-2">
-    <!-- Saldo -->
-    <div class="col-md-4">
-      <div class="card p-3">
-        <div class="money-title">Saldo</div>
-        <h4>Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</h4>
-        <form action="{{ route('transaksi.store') }}" method="POST">
-          @csrf
-          <input type="hidden" name="tipe" value="pemasukan">
-          <input type="number" name="jumlah" placeholder="Tambah Saldo" class="form-control mt-2">
-          <button class="btn btn-sm btn-success mt-2">Tambah</button>
-        </form>
-      </div>
-    </div>
-
-        <div class="col-md-4">
-      <div class="card p-3">
-        <div class="money-title">Tabungan</div>
-        <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
-        <div>Target Rp {{ number_format($targetTabungan ?? 0, 0, ',', '.') }}</div>
-        <div class="progress mt-2">
-          <div class="progress-bar" role="progressbar"
-            style="width: {{ ($targetTabungan ?? 1) > 0 ? min(($totalTabungan ?? 0)/($targetTabungan ?? 1)*100, 100) : 0 }}%">
-          </div>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ asset('rubber-duck.png') }}" alt="Logo">
+                <div class="logo-text">Duitto</div>
+            </div>
+            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+            <a href="{{ route('transaksi.create') }}" class="{{ request()->routeIs('transaksi.index') ? 'active' : '' }}">Transaksi</a>
+            <a href="{{ route('tabungan.index') }}" class="{{ request()->routeIs('tabungan.index') ? 'active' : '' }}">Tabungan</a>
+            <a href="{{ route('logout') }}">Logout</a>
         </div>
-        <form action="{{ route('transaksi.store') }}" method="POST">
-          @csrf
-          <input type="hidden" name="tipe" value="tabungan">
-          <input type="number" name="jumlah" placeholder="Tambah Tabungan" class="form-control mt-2">
-          <button class="btn btn-sm btn-primary mt-2">Tambah</button>
-        </form>
-      </div>
-    </div>
 
-        <div class="col-md-4">
-      <div class="card p-3">
-        <div class="money-title">Tagihan</div>
-        <h4>Rp {{ number_format($totalTagihan ?? 0, 0, ',', '.') }}</h4>
-        <form action="{{ route('transaksi.store') }}" method="POST">
-          @csrf
-          <input type="hidden" name="tipe" value="tagihan">
-          <input type="number" name="jumlah" placeholder="Tambah Tagihan" class="form-control mt-2">
-          <button class="btn btn-sm btn-danger mt-2">Tambah</button>
-        </form>
-      </div>
-    </div>
+        <!-- Main Content -->
+        <div class="main-content container-fluid">
+            <!-- Greeting -->
+            <h2 class="mb-4">Hello, {{ Auth::user()->username }}!</h2>
 
-        <div class="col-md-6">
-      <div class="card p-3">
-        <div class="money-title">Pengeluaran</div>
-        <h4>Rp {{ number_format($totalPengeluaran ?? 0, 0, ',', '.') }}</h4>
-        <form action="{{ route('transaksi.store') }}" method="POST">
-          @csrf
-          <input type="hidden" name="tipe" value="pengeluaran">
-          <input type="number" name="jumlah" placeholder="Tambah Pengeluaran" class="form-control mt-2">
-          <button class="btn btn-sm btn-danger mt-2">Tambah</button>
-        </form>
-      </div>
-    </div>
+            <!-- Dashboard Content -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="money-title">Pemasukan</div>
+                        <ul class="mb-2">
+                            @foreach($dataPemasukan as $item)
+                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ route('transaksi.create', ['tipe' => 'pemasukan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                    </div>
+                </div>
 
-        <div class="col-md-6">
-      <div class="card p-3">
-        <div class="money-title">Pemasukan</div>
-        <h4>Rp {{ number_format($totalPemasukan ?? 0, 0, ',', '.') }}</h4>
-        <form action="{{ route('transaksi.store') }}" method="POST">
-          @csrf
-          <input type="hidden" name="tipe" value="pemasukan">
-          <input type="number" name="jumlah" placeholder="Tambah Pemasukan" class="form-control mt-2">
-          <button class="btn btn-sm btn-success mt-2">Tambah</button>
-        </form>
-      </div>
-    </div>
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="money-title">Pengeluaran</div>
+                        <ul class="mb-2">
+                            @foreach($dataPengeluaran as $item)
+                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ route('transaksi.create', ['tipe' => 'pengeluaran']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                    </div>
+                </div>
 
-      </div>
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="money-title">Tagihan</div>
+                        <ul class="mb-2">
+                            @foreach($dataTagihan as $item)
+                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ route('transaksi.create', ['tipe' => 'tagihan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <div class="money-title">Tabungan</div>
+                        <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
+                        <a href="{{ route('transaksi.create', ['tipe' => 'tabungan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card p-3">
+                        <div class="money-title">Saldo Saat Ini</div>
+                        <h3 class="mt-2">Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </body>
 </html>
