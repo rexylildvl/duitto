@@ -8,26 +8,26 @@ use App\Models\Transaksi;
 class DashboardController extends Controller
 {
     public function index()
-{
-    $dataPemasukan = session('riwayat', collect([]))->where('tipe', 'pemasukan');
-    $dataPengeluaran = session('riwayat', collect([]))->where('tipe', 'pengeluaran');
-    $dataTagihan = session('riwayat', collect([]))->where('tipe', 'tagihan');
-    $totalTabungan = session('tabungan', 0);
-    $saldo = session('saldo', 0);
-
-    return view('dashboard', compact(
-        'dataPemasukan',
-        'dataPengeluaran',
-        'dataTagihan',
-        'totalTabungan',
-        'saldo'
-    ));
-}
-
-
-    public function store(Request $request)
     {
-        Transaksi::create($request->all());
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+        $dataPemasukan = Transaksi::where('tipe', 'pemasukan')->orderByDesc('created_at')->take(5)->get();
+        $dataPengeluaran = Transaksi::where('tipe', 'pengeluaran')->orderByDesc('created_at')->take(5)->get();
+        $dataTagihan = Transaksi::where('tipe', 'tagihan')->orderByDesc('created_at')->take(5)->get();
+        $totalTabungan = Transaksi::where('tipe', 'tabungan')->sum('jumlah');
+
+        // Saldo: hanya tagihan yang sudah dibayar yang dihitung
+        $saldo = Transaksi::where('tipe', 'pemasukan')->sum('jumlah')
+               - (
+                    Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
+                    + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
+                    + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+                );
+
+        return view('dashboard', compact(
+            'dataPemasukan',
+            'dataPengeluaran',
+            'dataTagihan',
+            'totalTabungan',
+            'saldo'
+        ));
     }
 }

@@ -78,6 +78,17 @@
                     Daftarkan Akun <br><span class="highlight">Duitto</span> mu!
                 </h1>
 
+{{-- Tampilkan error validasi --}}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
                 <form method="POST" action="{{ route('register') }}" class="form-box w-100">
                     @csrf
                     <div class="mb-3">

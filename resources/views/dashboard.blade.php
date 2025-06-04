@@ -226,14 +226,17 @@
         <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="bi bi-house-door"></i><span class="nav-text">Beranda</span>
         </a>
-        <a href="{{ route('transaksi.create', ['tipe' => 'tagihan']) }}" class="{{ request()->routeIs('transaksi.create') && request('tipe') === 'tagihan' ? 'active' : '' }}">
+        <a href="{{ route('tagihan.index') }}" class="{{ request()->routeIs('tagihan.index') ? 'active' : '' }}">
             <i class="bi bi-receipt"></i><span class="nav-text">Tagihan</span>
         </a>
-        <a href="{{ route('transaksi.create', ['tipe' => 'pengeluaran']) }}" class="{{ request()->routeIs('transaksi.create') && request('tipe') === 'pengeluaran' ? 'active' : '' }}">
+        <a href="{{ route('pengeluaran.index') }}" class="{{ request()->routeIs('pengeluaran.index') ? 'active' : '' }}">
             <i class="bi bi-cash-stack"></i><span class="nav-text">Pengeluaran</span>
         </a>
-        <a href="{{ route('transaksi.create', ['tipe' => 'pemasukan']) }}" class="{{ request()->routeIs('transaksi.create') && request('tipe') === 'pemasukan' ? 'active' : '' }}">
+        <a href="{{ route('pemasukan.index') }}" class="{{ request()->routeIs('pemasukan.index') ? 'active' : '' }}">
             <i class="bi bi-wallet2"></i><span class="nav-text">Pemasukkan</span>
+        </a>
+        <a href="{{ route('tabungan.index') }}" class="{{ request()->routeIs('tabungan.index') ? 'active' : '' }}">
+            <i class="bi bi-piggy-bank"></i><span class="nav-text">Tabungan</span>
         </a>
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <a href="#"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
@@ -260,46 +263,61 @@
             <h2 class="mb-4">Hello, {{ Auth::user()->username }}!</h2>
 
             <div class="row g-4">
+                                <!-- Pemasukan -->
                 <div class="col-md-6">
                     <div class="card p-3">
                         <div class="money-title">Pemasukan</div>
                         <ul class="mb-2">
-                            @foreach($dataPemasukan as $item)
-                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
-                            @endforeach
+                            @forelse($dataPemasukan as $item)
+                                <li>Rp {{ number_format($item->jumlah, 0, ',', '.') }} <span class="text-muted small">{{ $item->created_at->format('d/m/Y') }}</span></li>
+                            @empty
+                                <li class="text-muted">Belum ada data.</li>
+                            @endforelse
                         </ul>
-                        <a href="{{ route('transaksi.create', ['tipe' => 'pemasukan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('pemasukan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('pemasukan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
                     </div>
                 </div>
+                <!-- Pengeluaran -->
                 <div class="col-md-6">
                     <div class="card p-3">
                         <div class="money-title">Pengeluaran</div>
                         <ul class="mb-2">
-                            @foreach($dataPengeluaran as $item)
-                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
-                            @endforeach
+                            @forelse($dataPengeluaran as $item)
+                                <li>Rp {{ number_format($item->jumlah, 0, ',', '.') }} <span class="text-muted small">{{ $item->created_at->format('d/m/Y') }}</span></li>
+                            @empty
+                                <li class="text-muted">Belum ada data.</li>
+                            @endforelse
                         </ul>
-                        <a href="{{ route('transaksi.create', ['tipe' => 'pengeluaran']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('pengeluaran.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('pengeluaran.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
                     </div>
                 </div>
+                <!-- Tagihan -->
                 <div class="col-md-6">
                     <div class="card p-3">
                         <div class="money-title">Tagihan</div>
                         <ul class="mb-2">
-                            @foreach($dataTagihan as $item)
-                                <li>Rp {{ number_format($item['jumlah'], 0, ',', '.') }}</li>
-                            @endforeach
+                            @forelse($dataTagihan as $item)
+                                <li>Rp {{ number_format($item->jumlah, 0, ',', '.') }} <span class="text-muted small">{{ $item->created_at->format('d/m/Y') }}</span></li>
+                            @empty
+                                <li class="text-muted">Belum ada data.</li>
+                            @endforelse
                         </ul>
-                        <a href="{{ route('transaksi.create', ['tipe' => 'tagihan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('tagihan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('tagihan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
                     </div>
                 </div>
+                <!-- Tabungan -->
                 <div class="col-md-6">
                     <div class="card p-3">
                         <div class="money-title">Tabungan</div>
                         <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
-                        <a href="{{ route('transaksi.create', ['tipe' => 'tabungan']) }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
                     </div>
                 </div>
+                <!-- Saldo -->
                 <div class="col-md-12">
                     <div class="card p-3">
                         <div class="money-title">Saldo Saat Ini</div>
