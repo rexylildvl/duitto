@@ -13,6 +13,7 @@ class CreateTransaksisTable extends Migration
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->enum('tipe', ['pemasukan', 'pengeluaran', 'tagihan', 'tabungan']);
         $table->decimal('jumlah', 12, 2);
+        $table->enum('status', ['belum', 'sudah'])->default('belum');
         $table->timestamps();
     });
     }

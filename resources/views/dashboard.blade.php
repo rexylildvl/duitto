@@ -105,6 +105,10 @@
             width: calc(100% - 70px);
         }
 
+        .bg-soft-peach {
+        background-color: #F0C28D !important;
+        }
+
         .sidebar:hover ~ .wrapper .main-content {
             margin-left: 220px;
             width: calc(100% - 220px);
@@ -239,7 +243,11 @@
             <i class="bi bi-piggy-bank"></i><span class="nav-text">Tabungan</span>
         </a>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <a href="#"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
+        <a href="{{ route('bantuan.index') }}" class="{{ request()->routeIs('bantuan.index') ? 'active' : '' }}">
+    <i class="bi bi-question-circle"></i>
+    <span class="nav-text">Bantuan</span>
+</a>
+
     </div>
 
     <!-- Wrapper Content -->
@@ -260,12 +268,42 @@
                 </div>
             </div>
 
-            <h2 class="mb-4">Hello, {{ Auth::user()->username }}!</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                <div>
+                    <div class="bg-white text-dark px-4 py-3 rounded-4 d-inline-flex align-items-center shadow-sm">
+                        <img src="{{ asset('rubber-duck.png') }}" alt="Logo" width="40" class="me-3">
+                        <div>
+                            <div class="fw-bold fs-5 mb-1">Hello, {{ Auth::user()->username }}!</div>
+                            <div class="text-muted small">Ready to make smart money moves today? You’re one step closer to financial freedom 🚀</div>
+                        </div>
+                    </div>
+                </div>
+            <div class="text-end">
+                <h4 class="mb-0 fw-bold fs-2" style="color: #F3AB9D;">Here’s your money snapshot!</h4>
+                <div class="text-white-50">{{ \Carbon\Carbon::now()->format('F Y') }}</div>
+            </div>
+    </div>
 
             <div class="row g-4">
-                                <!-- Pemasukan -->
+                                <!-- Saldo -->
                 <div class="col-md-6">
-                    <div class="card p-3">
+                    <div class="card p-3 bg-soft-peach">
+                        <div class="money-title">Saldo Saat Ini</div>
+                        <h3 class="mt-2">Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</h3>
+                    </div>
+                </div>
+                                <!-- Tabungan -->
+                <div class="col-md-6">
+                    <div class="card p-3 bg-soft-peach">
+                        <div class="money-title">Tabungan</div>
+                        <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
+                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
+                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
+                    </div>
+                </div>
+                                <!-- Pemasukan -->
+                <div class="col-md-4">
+                    <div class="card p-3 bg-white">
                         <div class="money-title">Pemasukan</div>
                         <ul class="mb-2">
                             @forelse($dataPemasukan as $item)
@@ -275,12 +313,12 @@
                             @endforelse
                         </ul>
                         <a href="{{ route('pemasukan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
-                        <a href="{{ route('pemasukan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
+                        <a href="{{ route('pemasukan.index') }}" class="btn btn-sm btn-peach mt-2">Lihat Semua</a>
                     </div>
                 </div>
                 <!-- Pengeluaran -->
-                <div class="col-md-6">
-                    <div class="card p-3">
+                <div class="col-md-4">
+                    <div class="card p-3 bg-white" >
                         <div class="money-title">Pengeluaran</div>
                         <ul class="mb-2">
                             @forelse($dataPengeluaran as $item)
@@ -290,12 +328,12 @@
                             @endforelse
                         </ul>
                         <a href="{{ route('pengeluaran.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
-                        <a href="{{ route('pengeluaran.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
+                        <a href="{{ route('pengeluaran.index') }}" class="btn btn-sm btn-peach mt-2">Lihat Semua</a>
                     </div>
                 </div>
                 <!-- Tagihan -->
-                <div class="col-md-6">
-                    <div class="card p-3">
+                <div class="col-md-4">
+                    <div class="card p-3 bg-white">
                         <div class="money-title">Tagihan</div>
                         <ul class="mb-2">
                             @forelse($dataTagihan as $item)
@@ -305,23 +343,7 @@
                             @endforelse
                         </ul>
                         <a href="{{ route('tagihan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
-                        <a href="{{ route('tagihan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
-                    </div>
-                </div>
-                <!-- Tabungan -->
-                <div class="col-md-6">
-                    <div class="card p-3">
-                        <div class="money-title">Tabungan</div>
-                        <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
-                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
-                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
-                    </div>
-                </div>
-                <!-- Saldo -->
-                <div class="col-md-12">
-                    <div class="card p-3">
-                        <div class="money-title">Saldo Saat Ini</div>
-                        <h3 class="mt-2">Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</h3>
+                        <a href="{{ route('tagihan.index') }}" class="btn btn-sm btn-peach mt-2">Lihat Semua</a>
                     </div>
                 </div>
             </div>
