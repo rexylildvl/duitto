@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     // Tabungan
     Route::get('/tabungan', [TransaksiController::class, 'tabunganIndex'])->name('tabungan.index');
     Route::post('/tabungan', [TransaksiController::class, 'tabunganStore'])->name('tabungan.store');
+    Route::post('/tabungan/{id}/setor', [TransaksiController::class, 'setorTabungan'])->name('tabungan.setor');
 
     // Bantuan
     Route::get('/bantuan', function () {
