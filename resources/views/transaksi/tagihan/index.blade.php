@@ -148,29 +148,64 @@
     <div class="wrapper">
         <div class="main-content">
             <h2 class="mb-4">Tagihan</h2>
-            {{-- Form Tambah Tagihan --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
-                <form action="{{ route('tagihan.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Rp" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="deadline" class="form-label">Deadline</label>
-                        <input type="date" name="deadline" id="deadline" class="form-control" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-peach">Simpan Tagihan</button>
-                    </div>
-                </form>
+            <div class="row mb-4">
+            <!-- Form Tambah Tagihan -->
+            <div class="col-md-6 order-2 order-md-1">
+                <div class="card p-4" style="border-radius: 1.5rem;">
+                    <form action="{{ route('tagihan.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nama" class="form-label" style="color: #fff; font-weight: bold;">Tagihan</label>
+                            <input type="text" name="nama" id="nama" class="form-control"
+                                style="background-color: #65689a; color: #fff; border-radius: 1rem; border: none;" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jumlah" class="form-label" style="color: #fff; font-weight: bold;">Nominal</label>
+                            <input type="number" name="jumlah" id="jumlah" class="form-control"
+                                style="background-color: #65689a; color: #fff; border-radius: 1rem; border: none;" placeholder="Rp" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deadline" class="form-label" style="color: #fff; font-weight: bold;">DeadLine</label>
+                            <input type="date" name="deadline" id="deadline" class="form-control"
+                                style="background-color: #65689a; color: #fff; border-radius: 1rem; border: none;" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kategori" class="form-label" style="color: #fff; font-weight: bold;">Kategori</label>
+                            <select name="kategori" id="kategori" class="form-control"
+                                style="background-color: #65689a; color: #fff; border-radius: 1rem; border: none;" required>
+                                <option value="" disabled selected>CHOOSE</option>
+                                <option value="rumah">Rumah</option>
+                                <option value="makanan">Makanan</option>
+                                <option value="transportasi">Transportasi</option>
+                                <option value="perbelanjaan">Perbelanjaan</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn" style="background-color: #fdb88d; color: #2D3250; font-weight: bold; border-radius: 1rem;">Tambah</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <!-- Card Saldo -->
+            <div class="col-md-6 order-1 order-md-2 d-flex align-items-start justify-content-center mb-3 mb-md-0">
+                <div class="card p-4" style="background-color: #fdb88d; color: #2D3250; border-radius: 1.5rem; width: 620px; max-width: 100%;">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-wallet2" style="font-size: 2rem; margin-right: 10px;"></i>
+                        <span class="fw-bold fs-4">Saldo</span>
+                    </div>
+                    <div>Saldo saat ini, biar kamu tahu batas aman sebelum belanja!</div>
+                    <div class="fw-bold fs-3 mt-3">
+                        Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}
+                    </div>
+                </div>
+            </div>
+        </div>
             {{-- Notifikasi --}}
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
             {{-- List Data Tagihan --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
+            <div class="card p-4 mb-4" style="max-width: 600px; color: #fff;">
                 <h5>Daftar Tagihan</h5>
                 <ul class="list-group">
                     @forelse($list as $item)
@@ -181,28 +216,36 @@
                             @if($item->status == 'sudah') list-group-item-success
                             @elseif($lewat_deadline) list-group-item-danger
                             @endif
-                        ">
+                        " style="background: #3e446a; color: #fff;">
                             <div>
-                                <strong>Rp {{ number_format($item->jumlah, 0, ',', '.') }}</strong>
-                                <span class="badge bg-secondary ms-2">{{ $item->deadline ? \Carbon\Carbon::parse($item->deadline)->format('d/m/Y') : '-' }}</span>
-                                @if($lewat_deadline)
-                                    <span class="badge bg-danger ms-2">Lewat Deadline!</span>
-                                @endif
-                                @if($item->status == 'sudah')
-                                    <span class="badge bg-success ms-2">Sudah Dibayar</span>
-                                @else
-                                    <span class="badge bg-warning text-dark ms-2">Belum Dibayar</span>
+                                <div><strong>{{ $item->nama }}</strong></div>
+                                <div class="small">
+                                    Kategori: <span class="badge bg-info text-dark">{{ ucfirst($item->kategori) }}</span>
+                                    | Deadline: <span class="badge bg-secondary">{{ $item->deadline ? \Carbon\Carbon::parse($item->deadline)->format('d/m/Y') : '-' }}</span>
+                                </div>
+                                <div>
+                                    Nominal: <strong>Rp {{ number_format($item->jumlah, 0, ',', '.') }}</strong>
+                                    @if($lewat_deadline)
+                                        <span class="badge bg-danger ms-2">Lewat Deadline!</span>
+                                    @endif
+                                    @if($item->status == 'sudah')
+                                        <span class="badge bg-success ms-2">Sudah Dibayar</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark ms-2">Belum Dibayar</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div>
+                                @if($item->status == 'belum')
+                                <form action="{{ route('tagihan.bayar', $item->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success">Bayar</button>
+                                </form>
                                 @endif
                             </div>
-                            @if($item->status == 'belum')
-                            <form action="{{ route('tagihan.bayar', $item->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-success">Bayar</button>
-                            </form>
-                            @endif
                         </li>
                     @empty
-                        <li class="list-group-item">Belum ada tagihan.</li>
+                        <li class="list-group-item" style="background: #3e446a; color: #fff;">Belum ada tagihan.</li>
                     @endforelse
                 </ul>
             </div>

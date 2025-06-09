@@ -12,7 +12,14 @@ class TransaksiController extends Controller
     public function pemasukanIndex()
     {
         $list = Transaksi::where('tipe', 'pemasukan')->orderByDesc('created_at')->get();
-        return view('transaksi.pemasukan.index', compact('list'));
+        $saldo = Transaksi::where('tipe', 'pemasukan')->sum('jumlah')
+            - (
+                Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
+                + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
+                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+            );
+
+        return view('transaksi.pemasukan.index', compact('list', 'saldo'));
     }
 
     public function pemasukanStore(Request $request)
@@ -30,39 +37,80 @@ class TransaksiController extends Controller
     public function pengeluaranIndex()
     {
         $list = Transaksi::where('tipe', 'pengeluaran')->orderByDesc('created_at')->get();
-        return view('transaksi.pengeluaran.index', compact('list'));
+
+        // Hitung saldo
+        $saldo = Transaksi::where('tipe', 'pemasukan')->sum('jumlah')
+            - (
+                Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
+                + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
+                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+            );
+
+        $kategoriList = ['rumah', 'makanan', 'transportasi', 'perbelanjaan'];
+        $ikon = [
+            'rumah' => 'bi-house-door',
+            'makanan' => 'bi-egg-fried',
+            'transportasi' => 'bi-bus-front',
+            'perbelanjaan' => 'bi-cart2'
+        ];
+        $pengeluaranPerKategori = [];
+        foreach ($kategoriList as $kat) {
+            $pengeluaranPerKategori[$kat] = Transaksi::where('tipe', 'pengeluaran')->where('kategori', $kat)->sum('jumlah');
+        }
+
+        return view('transaksi.pengeluaran.index', compact('list', 'saldo', 'kategoriList', 'ikon', 'pengeluaranPerKategori'));
     }
 
     public function pengeluaranStore(Request $request)
     {
-        $request->validate(['jumlah' => 'required|numeric|min:1']);
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'jumlah' => 'required|numeric|min:1',
+            'kategori' => 'required|string|max:255',
+        ]);
         Transaksi::create([
             'tipe' => 'pengeluaran',
+            'nama' => $request->nama,
             'jumlah' => $request->jumlah,
+            'kategori' => $request->kategori,
             'user_id' => Auth::id(),
         ]);
         return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil ditambahkan');
     }
 
+
     // ======= TAGIHAN =======
     public function tagihanIndex()
     {
         $list = Transaksi::where('tipe', 'tagihan')->orderByDesc('created_at')->get();
-        return view('transaksi.tagihan.index', compact('list'));
+
+        // Hitung saldo
+        $saldo = Transaksi::where('tipe', 'pemasukan')->sum('jumlah')
+            - (
+                Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
+                + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
+                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+            );
+
+        return view('transaksi.tagihan.index', compact('list', 'saldo'));
     }
 
     public function tagihanStore(Request $request)
     {
         $request->validate([
+            'nama' => 'required|string|max:255',
             'jumlah' => 'required|numeric|min:1',
             'deadline' => 'required|date',
+            'kategori' => 'required|string|max:255',
         ]);
         Transaksi::create([
             'tipe' => 'tagihan',
+            'nama' => $request->nama,
             'jumlah' => $request->jumlah,
             'user_id' => Auth::id(),
             'deadline' => $request->deadline,
             'status' => 'belum',
+            'kategori' => $request->kategori,
         ]);
         return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil ditambahkan');
     }

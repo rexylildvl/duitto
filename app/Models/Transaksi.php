@@ -14,7 +14,8 @@ class Transaksi extends Model
         'status',
         'nama',
         'frekuensi',
-        'target'
+        'target',
+        'kategori'
     ];
 }
 

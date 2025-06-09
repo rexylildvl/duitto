@@ -148,25 +148,42 @@
     <div class="wrapper">
         <div class="main-content">
             <h2 class="mb-4">Pemasukan</h2>
-            {{-- Form Tambah Pemasukan --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
-                <form action="{{ route('pemasukan.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Rp" required>
+            <div class="row mb-4">
+                <!-- Card Saldo -->
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="card p-4 h-100" style="background-color: #fdb88d; color: #2D3250; border-radius: 1.5rem;">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-wallet2" style="font-size: 2rem; margin-right: 10px;"></i>
+                            <span class="fw-bold fs-4">Saldo</span>
+                        </div>
+                        <div>Saldo saat ini, biar kamu tahu batas aman sebelum belanja!</div>
+                        <div class="fw-bold fs-3 mt-3">
+                            Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}
+                        </div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-peach">Simpan Pemasukan</button>
+                </div>
+                <!-- Form Tambah Pemasukan -->
+                <div class="col-md-6">
+                    <div class="card p-4 mb-4" style="max-width: 600px;">
+                        <form action="{{ route('pemasukan.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="jumlah" class="form-label">Jumlah</label>
+                                <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Rp" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-peach">Simpan Pemasukan</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
             {{-- Notifikasi --}}
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            {{-- List Data Pengeluaran --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
+            {{-- List Data Pemasukan --}}
+            <div class="card p-4 mb-4" style="max-width: 600px; color: #fff">
                 <h5>Daftar Pemasukan</h5>
                 <ul class="list-group">
                     @forelse($list as $item)

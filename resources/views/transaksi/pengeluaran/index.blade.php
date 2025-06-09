@@ -148,35 +148,107 @@
     <div class="wrapper">
         <div class="main-content">
             <h2 class="mb-4">Pengeluaran</h2>
-            {{-- Form Tambah Pengeluaran --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
-                <form action="{{ route('pengeluaran.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Rp" required>
+            <div class="row mb-4">
+                <!-- Atas: Form & Saldo Samping Form -->
+                <div class="d-flex flex-column flex-md-row gap-3">
+                    <!-- Form di pojok kiri atas -->
+                    <div style="flex:1; max-width:620px;">
+                        <div class="card p-4 mb-3" style="max-width:620px; width:620px;">
+                            <form action="{{ route('pengeluaran.store') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="nama" class="form-label" style="color: #fff; font-weight: bold;">Nama Pengeluaran</label>
+                                    <input type="text" name="nama" id="nama" class="form-control"
+                                        style="background-color: #5b628c; color: #fff; border-radius: 1rem; border: none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jumlah" class="form-label" style="color: #fff; font-weight: bold;">Nominal</label>
+                                    <input type="number" name="jumlah" id="jumlah" class="form-control"
+                                        style="background-color: #5b628c; color: #fff; border-radius: 1rem; border: none;" placeholder="Rp" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kategori" class="form-label" style="color: #fff; font-weight: bold;">Kategori</label>
+                                    <select name="kategori" id="kategori" class="form-control"
+                                        style="background-color: #5b628c; color: #fff; border-radius: 1rem; border: none;" required>
+                                        <option value="" disabled selected>Pilih Kategori</option>
+                                        <option value="rumah">Rumah</option>
+                                        <option value="makanan">Makanan</option>
+                                        <option value="transportasi">Transportasi</option>
+                                        <option value="perbelanjaan">Perbelanjaan</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-peach">Tambah</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- List Data Pengeluaran di bawah form -->
+                        <div class="card p-4 mb-4" style="max-width:620px; width:620px; color: #fff;">
+                            <h5 class="mb-3 fw-bold"><i class="bi bi-cash-stack me-2"></i>Daftar Pengeluaran</h5>
+                            <ul class="list-group">
+                                @forelse($list as $item)
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background: #3e446a; color: #fff; border: none; border-radius: 1rem; margin-bottom: 10px;">
+                                        <div>
+                                            <div class="fw-bold">{{ $item->nama }}</div>
+                                            <span class="badge bg-secondary">{{ ucfirst($item->kategori) }}</span>
+                                        </div>
+                                        <div class="fw-bold">
+                                            Rp {{ number_format($item->jumlah, 0, ',', '.') }}
+                                        </div>
+                                    </li>
+                                @empty
+                                    <li class="list-group-item" style="background: #3e446a; color: #fff; border: none;">Belum ada pengeluaran.</li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-peach">Simpan Pengeluaran</button>
+                    <!-- Saldo dan Rekap di samping form -->
+                    <div style="flex:1; max-width:620px; width:620px;">
+                        <div class="card p-4 mb-3" style="background-color: #fdb88d; color: #2D3250; border-radius: 1.5rem; max-width:620px; width:620px;">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-wallet2" style="font-size: 2rem; margin-right: 10px;"></i>
+                                <span class="fw-bold fs-4">Saldo</span>
+                            </div>
+                            <div>Saldo saat ini, biar kamu tahu batas aman sebelum belanja!</div>
+                            <div class="fw-bold fs-3 mt-3">
+                                Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}
+                            </div>
+                        </div>
+                        <!-- Rekap Pengeluaran di bawah saldo -->
+                        <div class="card p-4 mb-4" style="background-color: #fdb88d; color: #232323; border-radius: 1.5rem; max-width:620px; width:620px;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-gift" style="font-size: 2rem; margin-right: 10px;"></i>
+                                <span class="fw-bold fs-3" style="font-family: serif;">Kategori</span>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-6 mb-3">
+                                    <i class="bi bi-house-door" style="font-size: 1.5rem;"></i>
+                                    <span class="fw-bold ms-1">Rumah</span>
+                                    <div>{{ number_format($pengeluaranPerKategori['rumah'] ?? 0, 0, ',', '.') }}</div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <i class="bi bi-bus-front" style="font-size: 1.5rem;"></i>
+                                    <span class="fw-bold ms-1">Transportasi</span>
+                                    <div>{{ number_format($pengeluaranPerKategori['transportasi'] ?? 0, 0, ',', '.') }}</div>
+                                </div>
+                                <div class="col-6">
+                                    <i class="bi bi-egg-fried" style="font-size: 1.5rem;"></i>
+                                    <span class="fw-bold ms-1">Makanan</span>
+                                    <div>{{ number_format($pengeluaranPerKategori['makanan'] ?? 0, 0, ',', '.') }}</div>
+                                </div>
+                                <div class="col-6">
+                                    <i class="bi bi-cart2" style="font-size: 1.5rem;"></i>
+                                    <span class="fw-bold ms-1">Perbelanjaan</span>
+                                    <div>{{ number_format($pengeluaranPerKategori['perbelanjaan'] ?? 0, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            {{-- Notifikasi --}}
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            {{-- List Data Pengeluaran --}}
-            <div class="card p-4 mb-4" style="max-width: 600px;">
-                <h5>Daftar Pengeluaran</h5>
-                <ul class="list-group">
-                    @forelse($list as $item)
-                        <li class="list-group-item">
-                            Rp {{ number_format($item->jumlah, 0, ',', '.') }} - {{ $item->created_at->format('d/m/Y') }}
-                        </li>
-                    @empty
-                        <li class="list-group-item">Belum ada pengeluaran.</li>
-                    @endforelse
-                </ul>
+                </div>
+                {{-- Notifikasi --}}
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
             </div>
         </div>
     </div>
