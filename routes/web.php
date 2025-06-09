@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tagihan', [TransaksiController::class, 'tagihanIndex'])->name('tagihan.index');
     Route::post('/tagihan', [TransaksiController::class, 'tagihanStore'])->name('tagihan.store');
     Route::post('/tagihan/{id}/bayar', [TransaksiController::class, 'bayarTagihan'])->name('tagihan.bayar');
+    Route::post('/tagihan/{id}/bayar', [TransaksiController::class, 'bayar'])->name('tagihan.bayar');
 
     // Tabungan
     Route::get('/tabungan', [TransaksiController::class, 'tabunganIndex'])->name('tabungan.index');

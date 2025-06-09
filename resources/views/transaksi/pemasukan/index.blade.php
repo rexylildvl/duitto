@@ -168,6 +168,10 @@
                         <form action="{{ route('pemasukan.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Pemasukan</label>
+                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Contoh: Gaji, Bonus, dll" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="jumlah" class="form-label">Jumlah</label>
                                 <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Rp" required>
                             </div>
@@ -187,8 +191,14 @@
                 <h5>Daftar Pemasukan</h5>
                 <ul class="list-group">
                     @forelse($list as $item)
-                        <li class="list-group-item">
-                            Rp {{ number_format($item->jumlah, 0, ',', '.') }} - {{ $item->created_at->format('d/m/Y') }}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold">{{ $item->nama }}</div>
+                                <span class="text-muted small">{{ $item->created_at->format('d/m/Y') }}</span>
+                            </div>
+                            <div class="fw-bold">
+                                Rp {{ number_format($item->jumlah, 0, ',', '.') }}
+                            </div>
                         </li>
                     @empty
                         <li class="list-group-item">Belum ada pemasukan.</li>
@@ -197,5 +207,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

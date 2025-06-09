@@ -27,6 +27,7 @@ class TransaksiController extends Controller
         $request->validate(['jumlah' => 'required|numeric|min:1']);
         Transaksi::create([
             'tipe' => 'pemasukan',
+            'nama' => $request->nama,
             'jumlah' => $request->jumlah,
             'user_id' => Auth::id(),
         ]);
@@ -53,11 +54,11 @@ class TransaksiController extends Controller
             'transportasi' => 'bi-bus-front',
             'perbelanjaan' => 'bi-cart2'
         ];
-        $pengeluaranPerKategori = [];
-        foreach ($kategoriList as $kat) {
-            $pengeluaranPerKategori[$kat] = Transaksi::where('tipe', 'pengeluaran')->where('kategori', $kat)->sum('jumlah');
-        }
-
+        $pengeluaranPerKategori = \App\Models\Transaksi::where('tipe', 'pengeluaran')
+            ->selectRaw('kategori, SUM(jumlah) as total')
+            ->groupBy('kategori')
+            ->pluck('total', 'kategori')
+            ->toArray();
         return view('transaksi.pengeluaran.index', compact('list', 'saldo', 'kategoriList', 'ikon', 'pengeluaranPerKategori'));
     }
 
@@ -123,6 +124,25 @@ class TransaksiController extends Controller
             $tagihan->save();
         }
         return redirect()->route('tagihan.index')->with('success', 'Tagihan sudah dibayar');
+    }
+
+    public function bayar($id)
+    {
+        $tagihan = Transaksi::findOrFail($id);
+        if ($tagihan->status === 'belum') {
+            $tagihan->status = 'sudah';
+            $tagihan->save();
+
+            // Tambahkan ke pengeluaran
+            Transaksi::create([
+                'tipe' => 'pengeluaran',
+                'nama' => $tagihan->nama,
+                'jumlah' => $tagihan->jumlah,
+                'kategori' => $tagihan->kategori,
+                'user_id' => auth()->id(),
+            ]);
+        }
+        return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil dibayar!');
     }
 
     // ======= TABUNGAN =======
