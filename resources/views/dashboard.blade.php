@@ -218,6 +218,26 @@
         .profile-dropdown:hover .profile-dropdown-content {
             display: block;
         }
+        
+        .circular-chart {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .circle-bg {
+            stroke: #eee;
+        }
+
+        .circle {
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.3s ease;
+        }
+
+        .percentage {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -285,23 +305,78 @@
     </div>
 
             <div class="row g-4">
-                                <!-- Saldo -->
+                <!-- Saldo -->
+                <div class="col-md-6">
+                    <div class="card p-4 bg-soft-peach rounded-4 shadow-sm d-flex flex-row justify-content-between align-items-center">
+                        <!-- Kiri - Ikon dan Saldo -->
+                        <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="bi bi-wallet2" style="font-size: 1.8rem;"></i>
+                        </div>
+                        <div>
+                            <div class="fw-semibold fs-5">Saldo</div>
+                            <div class="fw-bold fs-3">Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</div>
+                        </div>
+                        </div>
+
+                        <!-- Kanan - Tombol Tambah Saldo -->
+                        <div class="text-center">
+                        <a href="{{ route('pemasukan.index') }}" class="text-dark text-decoration-none">
+                            <div class="border border-dark rounded p-2 d-inline-block">
+                            <i class="bi bi-plus" style="font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="mt-1 small">Tambah Saldo</div>
+                        </a>
+                        </div>
+                    </div>
+                    </div>
+
+
+                <!-- Tabungan -->
                 <div class="col-md-6">
                     <div class="card p-3 bg-soft-peach">
-                        <div class="money-title">Saldo Saat Ini</div>
-                        <h3 class="mt-2">Rp {{ number_format($saldo ?? 0, 0, ',', '.') }}</h3>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="money-title">
+                                    <i class="bi bi-piggy-bank-fill me-1"></i> Tabungan
+                                </div>
+                                <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
+                                <small class="text-muted">Target: Rp {{ number_format($targetTabungan, 0, ',', '.') }}</small>
+
+                            </div>
+                            @php
+                                $target = $targetTabungan > 0 ? $targetTabungan : 10000000;
+                                $progress = min(100, round(($totalTabungan / $target) * 100));
+                            @endphp
+                            <div style="width: 80px; height: 80px; position: relative;">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none"
+                                        stroke="#f0e9df"
+                                        stroke-width="4" />
+                                    <path class="circle"
+                                        stroke-dasharray="{{ $progress }}, 100"
+                                        d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none"
+                                        stroke="#4b3f72"
+                                        stroke-width="4" />
+                                    <text x="18" y="20.35" class="percentage" text-anchor="middle" fill="#000" font-size="6">{{ $progress }}%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach">Tambah</a>
+                            <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light">Lihat Semua</a>
+                        </div>
                     </div>
                 </div>
-                                <!-- Tabungan -->
-                <div class="col-md-6">
-                    <div class="card p-3 bg-soft-peach">
-                        <div class="money-title">Tabungan</div>
-                        <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
-                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach mt-2">Tambah</a>
-                        <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light mt-2">Lihat Semua</a>
-                    </div>
-                </div>
-                                <!-- Pemasukan -->
+
+                <!-- Pemasukan -->
                 <div class="col-md-4">
                     <div class="card p-3 bg-white">
                         <div class="money-title">Pemasukan</div>
