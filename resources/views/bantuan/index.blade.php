@@ -537,28 +537,128 @@
             </section>
 
             <section class="manual-section">
-                <h2><span>Manual</span> <span class="highlight-yellow">Pengguna</span></h2>
-                <div class="manual-content">
-                    <ul class="manual-list">
-                        <li><i class="bi bi-chevron-down"></i> Navigasi Umum</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                        <li><i class="bi bi-chevron-down"></i> Menambahkan Transaksi</li>
-                        <li><i class="bi bi-chevron-down"></i> Target Tabungan</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                    </ul>
-                    <ul class="manual-list">
-                        <li><i class="bi bi-chevron-down"></i> Tidak Bisa Login?</li>
-                        <li><i class="bi bi-chevron-down"></i> Saldo Tidak Berubah?</li>
-                        <li><i class="bi bi-chevron-down"></i> Angka muncul sebagai ?</li>
-                    </ul>
-                </div>
-            </section>
+  <h2><span>Manual</span> <span class="highlight-yellow">Pengguna</span></h2>
+  <div class="manual-content">
+    <ul class="manual-list">
+      <li>
+        <details>
+          <summary> Navigasi Umum</summary>
+          <p>
+            Navigasi utama aplikasi terletak di bagian atas atau samping layar dan terdiri dari beberapa menu utama seperti: <strong>Beranda</strong>, <strong>Transaksi</strong>, <strong>Target</strong>, <strong>Statistik</strong>, dan <strong>Profil</strong>. Gunakan menu tersebut untuk berpindah antar halaman dengan cepat dan efisien.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary> Cara Masuk dan Daftar</summary>
+          <p>
+            Untuk mulai menggunakan aplikasi, klik tombol <strong>Masuk</strong> di pojok kanan atas. Jika belum memiliki akun, klik <strong>Daftar</strong> dan isi formulir pendaftaran dengan nama, email aktif, dan kata sandi. Setelah berhasil, Anda akan langsung diarahkan ke beranda aplikasi.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary> Menambahkan Transaksi</summary>
+          <p>
+            Untuk mencatat pemasukan atau pengeluaran, buka menu <strong>Transaksi</strong>, lalu klik <strong>Tambah Transaksi</strong>. Pilih jenis transaksi (pemasukan/pengeluaran), kategori, nominal, tanggal, dan deskripsi. Setelah itu klik <strong>Simpan</strong>. Data akan otomatis tercatat dan memengaruhi saldo Anda.
+          </p>
+        </details>
+      </li>
+    </ul>
+
+    <ul class="manual-list">
+      <li>
+        <details>
+          <summary> Melihat Statistik</summary>
+          <p>
+            Di menu <strong>Statistik</strong>, Anda bisa melihat grafik pemasukan dan pengeluaran per bulan, serta distribusi pengeluaran per kategori. Statistik ini membantu Anda memahami pola keuangan dan membuat keputusan yang lebih baik.
+          </p>
+        </details>
+      </li>
+        <li>
+        <details>
+          <summary> Mengelola Kategori</summary>
+          <p>
+            Untuk menyesuaikan jenis kategori transaksi sesuai kebutuhan, masuk ke menu <strong>Pengaturan</strong> > <strong>Manajemen Kategori</strong>. Anda dapat menambahkan kategori baru, mengubah nama kategori, atau menghapus kategori yang tidak lagi digunakan.
+          </p>
+        </details>
+        </li>
+       <li>
+        <details>
+          <summary> Target Tabungan</summary>
+          <p>
+            Anda bisa membuat target tabungan dengan masuk ke menu <strong>Target</strong>. Klik <strong>Buat Target</strong>, isi nama target, jumlah nominal, dan tanggal target. Setiap kali Anda menabung, aplikasi akan menghitung dan menampilkan progress pencapaian Anda.
+          </p>
+        </details>
+      </li>
+    </ul>
+  </div>
+</section>
 
             <section class="faq-section">
                 <h2><span>Frequently</span> <span class="highlight-yellow">Ask Question</span></h2>
-                </section>
-            </div>
+                <div class="faq-content">
+                    <ul class="manual-list">
+      <li>
+        <details>
+          <summary> Tidak Bisa Login?</summary>
+          <p>
+            Jika Anda tidak dapat masuk, pastikan email dan kata sandi yang dimasukkan sudah benar. Jika lupa kata sandi, klik <strong>Lupa Password</strong> untuk mengatur ulang melalui email. Pastikan koneksi internet stabil dan aplikasi telah diperbarui ke versi terbaru.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary> Saldo Tidak Berubah?</summary>
+          <p>
+            Jika saldo tidak berubah setelah menambahkan transaksi, periksa apakah Anda telah menekan tombol <strong>Simpan</strong>. Coba juga muat ulang halaman. Jika masalah tetap muncul, hubungi tim dukungan melalui menu <strong>Bantuan</strong>.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary> Angka muncul sebagai "?"</summary>
+          <p>
+            Jika angka muncul sebagai tanda tanya (?), hal ini biasanya disebabkan oleh masalah pengaturan regional atau encoding di perangkat. Pastikan perangkat menggunakan <strong>format angka Indonesia</strong> dan aplikasi tidak mengalami kerusakan file. Jika tetap bermasalah, coba gunakan perangkat lain.
+          </p>
+        </details>
+      </li>
+      <li>
+      <details>
+            <summary> Bagaimana Jika Saya Ganti HP?</summary>
+                <p>Anda tetap bisa login dengan akun yang sama di perangkat baru. Semua data tersimpan di cloud, jadi data Anda tidak akan hilang selama Anda menggunakan akun yang sama.</p>
+        </details>
+        </li>
+    </ul>
+
+    <ul class="manual-list">
+      <li>
+        <details>
+          <summary> Saldo Tidak Berubah Setelah Tambah Transaksi?</summary>
+          <p>
+            Saldo akan berubah secara otomatis setelah transaksi berhasil ditambahkan. Jika saldo tidak berubah, coba segarkan (refresh) halaman. Pastikan juga transaksi sudah tersimpan dengan meninjaunya di riwayat transaksi.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+            <summary>Bagaimana Cara Menghapus Transaksi?</summary>
+            <p>
+                Buka halaman "Riwayat Transaksi", lalu klik ikon tempat sampah di sebelah transaksi yang ingin Anda hapus. Anda akan diminta konfirmasi sebelum transaksi benar-benar dihapus.
+            </p>
+        </details>
+      </li>
+      <li>
+        <details>
+            <summary> Apakah Data Saya Aman?</summary>
+                <p>
+                    Ya. Kami menggunakan enkripsi pada semua data pengguna dan tidak membagikan informasi Anda ke pihak ketiga. Pastikan Anda tidak membagikan kata sandi ke siapa pun untuk menjaga keamanan akun.
+                </p>
+        </details>
+      </li>
+    </ul>
+    </div>
+</section>
 
         <div class="footer">
             <div class="d-flex justify-content-center align-items-center mb-3">
