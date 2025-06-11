@@ -12,8 +12,12 @@ class DashboardController extends Controller
         $dataPemasukan = Transaksi::where('tipe', 'pemasukan')->orderByDesc('created_at')->take(5)->get();
         $dataPengeluaran = Transaksi::where('tipe', 'pengeluaran')->orderByDesc('created_at')->take(5)->get();
         $dataTagihan = Transaksi::where('tipe', 'tagihan')->orderByDesc('created_at')->take(5)->get();
+
+        // Ambil data tabungan terbaru (misal 5 data terakhir, sama seperti halaman tabungan)
+        $tabunganList = \App\Models\Transaksi::where('tipe', 'tabungan')->orderByDesc('created_at')->get();
+
         $totalTabungan = Transaksi::whereIn('tipe', ['tabungan', 'setor_tabungan'])->sum('jumlah');
-        $targetTabungan = Transaksi::where('tipe', 'tabungan')->sum('target');
+        $targetTabungan = Transaksi::where('tipe', 'tabungan')->orderByDesc('created_at')->value('target');
 
         // Saldo: hanya tagihan yang sudah dibayar yang dihitung
         $saldo = Transaksi::where('tipe', 'pemasukan')->sum('jumlah')
@@ -28,6 +32,7 @@ class DashboardController extends Controller
             'dataPemasukan',
             'dataPengeluaran',
             'dataTagihan',
+            'tabunganList', // <-- tambahkan ini
             'totalTabungan',
             'saldo',
             'targetTabungan'

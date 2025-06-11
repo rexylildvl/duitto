@@ -333,46 +333,57 @@
 
 
                 <!-- Tabungan -->
-                <div class="col-md-6">
-                    <div class="card p-3 bg-soft-peach">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="money-title">
-                                    <i class="bi bi-piggy-bank-fill me-1"></i> Tabungan
-                                </div>
-                                <h4>Rp {{ number_format($totalTabungan ?? 0, 0, ',', '.') }}</h4>
-                                <small class="text-muted">Target: Rp {{ number_format($targetTabungan, 0, ',', '.') }}</small>
-
-                            </div>
+                <div class="col-12">
+                    <div class="row g-3">
+                        @forelse($tabunganList as $tabungan)
                             @php
-                                $target = $targetTabungan > 0 ? $targetTabungan : 10000000;
-                                $progress = min(100, round(($totalTabungan / $target) * 100));
+                                // Hitung total setor untuk tabungan ini
+                                $totalSetor = \App\Models\Transaksi::where('tipe', 'setor_tabungan')
+                                    ->where('nama', $tabungan->nama)
+                                    ->sum('jumlah') + $tabungan->jumlah;
+                                $target = $tabungan->target > 0 ? $tabungan->target : 10000000;
+                                $progress = min(100, round(($totalSetor / $target) * 100));
                             @endphp
-                            <div style="width: 80px; height: 80px; position: relative;">
-                                <svg viewBox="0 0 36 36" class="circular-chart">
-                                    <path class="circle-bg"
-                                        d="M18 2.0845
-                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                            a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="#f0e9df"
-                                        stroke-width="4" />
-                                    <path class="circle"
-                                        stroke-dasharray="{{ $progress }}, 100"
-                                        d="M18 2.0845
-                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                            a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="#4b3f72"
-                                        stroke-width="4" />
-                                    <text x="18" y="20.35" class="percentage" text-anchor="middle" fill="#000" font-size="6">{{ $progress }}%</text>
-                                </svg>
+                            <div class="col-md-6">
+                                <div class="card p-3 bg-soft-peach mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="money-title">
+                                                <i class="bi bi-piggy-bank-fill me-1"></i> {{ $tabungan->nama }}
+                                            </div>
+                                            <h4>Rp {{ number_format($totalSetor, 0, ',', '.') }}</h4>
+                                            <small class="text-muted">Target: Rp {{ number_format($tabungan->target, 0, ',', '.') }}</small>
+                                        </div>
+                                        <div style="width: 80px; height: 80px; position: relative;">
+                                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                                <path class="circle-bg"
+                                                    d="M18 2.0845
+                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                    fill="none"
+                                                    stroke="#f0e9df"
+                                                    stroke-width="4" />
+                                                <path class="circle"
+                                                    stroke-dasharray="{{ $progress }}, 100"
+                                                    d="M18 2.0845
+                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                    fill="none"
+                                                    stroke="#4b3f72"
+                                                    stroke-width="4" />
+                                                <text x="18" y="20.35" class="percentage" text-anchor="middle" fill="#000" font-size="6">{{ $progress }}%</text>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-3">
-                            <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-peach">Tambah</a>
-                            <a href="{{ route('tabungan.index') }}" class="btn btn-sm btn-light">Lihat Semua</a>
-                        </div>
+                        @empty
+                            <div class="col-12">
+                                <div class="card p-3 bg-soft-peach mb-3 text-center">
+                                    Belum ada tabungan.
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
 

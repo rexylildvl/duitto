@@ -153,13 +153,23 @@ class TransaksiController extends Controller
         foreach ($tabunganList as $tabungan) {
             $tabungan->total_setor = Transaksi::where('tipe', 'setor_tabungan')
                 ->where('nama', $tabungan->nama)
-                ->sum('jumlah');
+                ->sum('jumlah') + $tabungan->jumlah; // tambahkan nominal awal tabungan
             $tabungan->last_setor_at = Transaksi::where('tipe', 'setor_tabungan')
                 ->where('nama', $tabungan->nama)
                 ->orderByDesc('created_at')
                 ->value('created_at');
         }
-        return view('transaksi.tabungan.index', ['list' => $tabunganList]);
+
+        // Saldo tabungan = tabungan + setor_tabungan
+        $saldo = Transaksi::whereIn('tipe', ['tabungan', 'setor_tabungan'])->sum('jumlah');
+        // Target tabungan (ambil dari tabungan terbaru, jika ada)
+        $targetTabungan = Transaksi::where('tipe', 'tabungan')->orderByDesc('created_at')->value('target');
+
+        return view('transaksi.tabungan.index', [
+            'list' => $tabunganList,
+            'saldo' => $saldo,
+            'targetTabungan' => $targetTabungan,
+        ]);
     }
 
     public function tabunganStore(Request $request)
