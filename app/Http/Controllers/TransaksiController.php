@@ -16,7 +16,7 @@ class TransaksiController extends Controller
             - (
                 Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
                 + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
-                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+                + Transaksi::whereIn('tipe', ['tabungan', 'setor_tabungan'])->sum('jumlah')
             );
 
         return view('transaksi.pemasukan.index', compact('list', 'saldo'));
@@ -44,7 +44,7 @@ class TransaksiController extends Controller
             - (
                 Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
                 + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
-                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+                + Transaksi::whereIn('tipe', ['tabungan', 'setor_tabungan'])->sum('jumlah')
             );
 
         $kategoriList = ['rumah', 'makanan', 'transportasi', 'perbelanjaan'];
@@ -90,7 +90,7 @@ class TransaksiController extends Controller
             - (
                 Transaksi::where('tipe', 'pengeluaran')->sum('jumlah')
                 + Transaksi::where('tipe', 'tagihan')->where('status', 'sudah')->sum('jumlah')
-                + Transaksi::where('tipe', 'tabungan')->sum('jumlah')
+                + Transaksi::whereIn('tipe', ['tabungan', 'setor_tabungan'])->sum('jumlah')
             );
 
         return view('transaksi.tagihan.index', compact('list', 'saldo'));
