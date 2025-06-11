@@ -619,34 +619,6 @@ details[open] {
             </section>
 
             <section class="map-section">
-                    <div>
-                        <p class="font-bold">Call Center <i class="bi bi-lock-fill text-sm"></i></p>
-                        <p class="info-row"><i class="bi bi-telephone-fill"></i> 085-591-309-511</p>
-                        <p class="info-row"><i class="bi bi-envelope-fill"></i> support@duitto.app</p>
-                    </div>
-                    <div class="social-links">
-                        <span class="font-bold">Temukan Kami</span>
-                        <i class="bi bi-facebook"></i>
-                        <i class="bi bi-instagram"></i>
-                        <i class="bi bi-tiktok"></i>
-                        <i class="bi bi-youtube"></i>
-                    </div>
-                </div>
-
-                <div class="contact-card-bantuan">
-                    <h2>Get In Touch</h2>
-                    <p>Let us know if you need any help or some message to improve this app</p>
-                    <form class="contact-form-bantuan">
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="text" placeholder="Subject" />
-                        <textarea rows="4" placeholder="Message"></textarea>
-                        <button type="submit" class="btn btn-peach">Send Message</button>
-                    </form>
-                </div>
-            </section>
-
-            <section class="map-section">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4026880942555!2d109.3090714!3d-7.4206584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6559312b6f4a01%3A0x7d9f7a7d4a4a4a!2sJl.%20Raya%20Mayjen%20Sungkono%20No.KM%205%2C%20Dusun%202%2C%20Blater%2C%20Kec.%20Kalimanah%2C%20Kabupaten%20Purbalingga%2C%20Jawa%20Tengah%2053371!5e0!3m2!1sen!2sid!4v1678912345678!5m2!1sen!2sid"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </section>
@@ -771,39 +743,8 @@ details[open] {
                 </div>
             </section>
         </div>
-
-        <div class="footer">
-            <div class="d-flex justify-content-center align-items-center mb-3">
-                <div class="bg-white text-dark px-3 py-2 rounded-pill d-inline-flex align-items-center shadow-sm">
-                    <img src="{{ asset('rubber-duck.png') }}" alt="Logo" width="30" class="me-2">
-                    <span class="fw-bold" style="font-size: 1.25rem;">Duitto</span>
-                </div>
-            </div>
-
-            <div class="fw-bold text-uppercase small">Sponsored By</div>
-            <div class="sponsor my-3 d-flex justify-content-center flex-wrap gap-3">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" height="30" alt="Mastercard">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Visa_2021.svg/1920px-Visa_2021.svg.png" height="30" alt="Visa">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" height="30" alt="PayPal">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/BI_Logo.png" height="30" alt="Bank Indonesia">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/213px-Bank_Mandiri_logo_2016.svg.png" height="30" alt="Bank Mandiri">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/960px-Bank_Central_Asia.svg.png" height="30" alt="BCA">
-                <img src="https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/200px-BNI_logo.svg.png?20240305030303" height="30" alt="BNI">
-            </div>
-
-            <div class="fw-bold text-uppercase small">Contact Us</div>
-            <div class="social-icons mt-2 d-flex justify-content-center">
-                <i class="bi bi-facebook"></i>
-                <i class="bi bi-twitter-x"></i>
-                <i class="bi bi-instagram"></i>
-                <i class="bi bi-tiktok"></i>
-                <i class="bi bi-youtube"></i>
-            </div>
-        
-            <div class="mt-4 small">&copy;Copyright 2025 all rights reserved.</div>
-        </div>
-
     </div>
+     @include('layouts.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
