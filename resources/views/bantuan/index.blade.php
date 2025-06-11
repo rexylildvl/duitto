@@ -251,9 +251,34 @@
             display: block;
         }
 
+        .profile-dropdown-content a,
+    .profile-dropdown-content button.dropdown-item {
+        color: #333;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 1rem;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    .profile-dropdown-content form {
+        margin: 0;
+    }
+
         .profile-dropdown:hover .profile-dropdown-content {
             display: block;
         }
+
+        .profile-dropdown-content a:hover,
+.profile-dropdown-content button.dropdown-item:hover {
+    color: #F3AB9D; 
+    background-color: transparent;
+    text-decoration: underline; 
+}
 
         /* Styles specific to Bantuan page content */
         .page-heading-bantuan {
@@ -551,13 +576,7 @@ details[open] {
                     <i class="bi bi-search"></i>
                     <input type="text" placeholder="Search Here" style="width: 100%;">
                 </div>
-                <div class="profile-dropdown">
-                    <i class="bi bi-person-circle fs-4"></i>
-                    <div class="profile-dropdown-content">
-                        <a href="#">Profil</a>
-                        <a href="{{ route('logout') }}">Keluar</a>
-                    </div>
-                </div>
+                @include('layouts.profile-dropdown')
             </div>
 
             <!-- <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">

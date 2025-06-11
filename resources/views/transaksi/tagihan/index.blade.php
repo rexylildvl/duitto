@@ -203,9 +203,35 @@
             display: block;
         }
 
+        .profile-dropdown-content a,
+    .profile-dropdown-content button.dropdown-item {
+        color: #333;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 1rem;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    .profile-dropdown-content form {
+        margin: 0;
+    }
+
         .profile-dropdown:hover .profile-dropdown-content {
             display: block;
         }
+
+        .profile-dropdown-content a:hover,
+.profile-dropdown-content button.dropdown-item:hover {
+    color: #F3AB9D; 
+    background-color: transparent;
+    text-decoration: underline; 
+}
                 .searchbar {
             background-color: #eee;
             border-radius: 20px;
