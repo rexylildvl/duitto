@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\ProfileController;
+
 
 // Redirect to login
 Route::redirect('/', '/login');
@@ -53,5 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/bantuan', function () {
         return view('bantuan.index');
     })->name('bantuan.index');
+
+    //Profile
+    // Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 });

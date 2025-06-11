@@ -148,17 +148,19 @@
         .footer .social-icons i:hover {
             color: #2D3250;
         }
-        .top-bar {
+                .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
             width: 100%;
         }
+
         .profile-dropdown {
             position: relative;
             display: inline-block;
         }
+
         .profile-dropdown-content {
             display: none;
             position: absolute;
@@ -169,14 +171,34 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .profile-dropdown-content a {
             color: #333;
             padding: 10px 16px;
             text-decoration: none;
             display: block;
         }
+
         .profile-dropdown:hover .profile-dropdown-content {
             display: block;
+        }
+                .searchbar {
+            background-color: #eee;
+            border-radius: 20px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            width: 400px;
+            max-width: 100%;
+        }
+
+        .searchbar input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
         }
     </style>
 </head>
@@ -203,23 +225,21 @@
             <i class="bi bi-piggy-bank"></i><span class="nav-text">Tabungan</span>
         </a>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <a href="#"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
+        <a href="{{ route('bantuan.index') }}" class="{{ request()->routeIs('bantuan.index') ? 'active' : '' }}"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
     </div>
 
     <div class="wrapper">
         <div class="main-content container-fluid">
             <div class="top-bar">
-                <h2 class="fw-bold mb-0" style="color: #F3AB9D;">Tabungan</h2>
-                <div class="profile-dropdown">
-                    <i class="bi bi-person-circle fs-4"></i>
-                    <div class="profile-dropdown-content">
-                        <a href="#">Profil</a>
-                        <a href="#">Pengaturan</a>
-                        <a href="{{ route('logout') }}">Keluar</a>
-                    </div>
+                <div class="searchbar">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search Here" style="width: 100%;">
                 </div>
+                
+                @include('layouts.profile-dropdown')
             </div>
-
+            <h2 class="fw-bold mb-0" style="color: #F3AB9D;">Tabungan</h2>
+            <br>
             {{-- Form Tambah Tabungan --}}
             <div class="card p-4 mb-4" style="max-width: 600px;">
                 <form action="{{ route('tabungan.store') }}" method="POST">

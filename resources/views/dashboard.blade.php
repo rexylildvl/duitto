@@ -307,13 +307,7 @@
                     <i class="bi bi-search"></i>
                     <input type="text" placeholder="Search Here" style="width: 100%;">
                 </div>
-                <div class="profile-dropdown">
-                    <i class="bi bi-person-circle fs-4"></i>
-                    <div class="profile-dropdown-content">
-                        <a href="#">Profil</a>
-                        <a href="{{ route('logout') }}">Keluar</a>
-                    </div>
-                </div>
+                @include('layouts.profile-dropdown')
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">

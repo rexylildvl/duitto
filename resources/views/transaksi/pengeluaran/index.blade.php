@@ -172,6 +172,59 @@
         .footer .social-icons i:hover {
             color: #2D3250;
         }
+                .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            right: 0;
+            z-index: 1001;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .profile-dropdown-content a {
+            color: #333;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .profile-dropdown:hover .profile-dropdown-content {
+            display: block;
+        }
+                .searchbar {
+            background-color: #eee;
+            border-radius: 20px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            width: 400px;
+            max-width: 100%;
+        }
+
+        .searchbar input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+        }
+        
+        .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        width: 100%;
+        }
+
 
     </style>
 </head>
@@ -198,18 +251,25 @@
             <i class="bi bi-piggy-bank"></i><span class="nav-text">Tabungan</span>
         </a>
         <br><br><br><br><br><br><br><br><br><br><br><br>
-        <a href="#"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
+        <a href="{{ route('bantuan.index') }}" class="{{ request()->routeIs('bantuan.index') ? 'active' : '' }}"><i class="bi bi-question-circle"></i><span class="nav-text">Bantuan</span></a>
     </div>
 
     <div class="wrapper">
         <div class="main-content">
+            <div class="top-bar">
+                <div class="searchbar">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search Here" style="width: 100%;">
+                </div>
+                @include('layouts.profile-dropdown')
+            </div>
             <h2 class="mb-4">Pengeluaran</h2>
             <div class="row mb-4">
                 <!-- Atas: Form & Saldo Samping Form -->
                 <div class="d-flex flex-column flex-md-row gap-3">
                     <!-- Form di pojok kiri atas -->
                     <div style="flex:1; max-width:620px;">
-                        <div class="card p-4 mb-3" style="max-width:620px; width:620px;">
+                        <div class="card p-4 mb-3" style="max-width:620px; width:100%;">
                             <form action="{{ route('pengeluaran.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
@@ -239,7 +299,7 @@
                             </form>
                         </div>
                         <!-- List Data Pengeluaran di bawah form -->
-                        <div class="card p-4 mb-4" style="max-width:620px; width:620px; color: #fff;">
+                        <div class="card p-4 mb-4" style="max-width:620px; width:100%; color: #fff;">
                             <h5 class="mb-3 fw-bold"><i class="bi bi-cash-stack me-2"></i>Daftar Pengeluaran</h5>
                             <ul class="list-group">
                                 @forelse($list as $item)
@@ -259,8 +319,8 @@
                         </div>
                     </div>
                     <!-- Saldo dan Rekap di samping form -->
-                    <div style="flex:1; max-width:620px; width:620px;">
-                        <div class="card p-4 mb-3" style="background-color: #fdb88d; color: #2D3250; border-radius: 1.5rem; max-width:620px; width:620px;">
+                    <div style="flex:1; max-width:620px; width:100%;">
+                        <div class="card p-4 mb-3" style="background-color: #fdb88d; color: #2D3250; border-radius: 1.5rem; max-width:620px; width:100%;">
                             <div class="d-flex align-items-center mb-2">
                                 <i class="bi bi-wallet2" style="font-size: 2rem; margin-right: 10px;"></i>
                                 <span class="fw-bold fs-4">Saldo</span>
@@ -271,7 +331,7 @@
                             </div>
                         </div>
                         <!-- Rekap Pengeluaran di bawah saldo -->
-                        <div class="card p-4 mb-4" style="background-color: #fdb88d; color: #232323; border-radius: 1.5rem; max-width:620px; width:620px;">
+                        <div class="card p-4 mb-4" style="background-color: #fdb88d; color: #232323; border-radius: 1.5rem; max-width:620px; width:100%;">
                             <div class="d-flex align-items-center mb-3">
                                 <i class="bi bi-gift" style="font-size: 2rem; margin-right: 10px;"></i>
                                 <span class="fw-bold fs-3" style="font-family: serif;">Kategori</span>
