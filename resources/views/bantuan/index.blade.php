@@ -174,12 +174,19 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Adjustments for the footer logo and text for consistency */
         .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white {
-            background-color: white !important; /* Ensure white background */
-            padding: 0.5rem 1rem; /* Adjust padding as per image */
-            border-radius: 2rem; /* Rounded pill shape */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+        background-color: #2D3250 !important; /* Changed from white to match the website's purple background */
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
+        font-size: 1.25rem;
+        background: linear-gradient(to right, #fdb88d, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: white; /* Added as fallback */
         }
 
         .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white img {
@@ -188,12 +195,7 @@
             margin-right: 0.5rem; /* Space between logo and text */
         }
 
-        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
-            font-size: 1.25rem; /* text-xl equivalent */
-            background: linear-gradient(to right, #fdb88d, white);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+
 
         .footer .sponsor,
         .footer .social-icons {
@@ -553,13 +555,12 @@ details[open] {
                     <i class="bi bi-person-circle fs-4"></i>
                     <div class="profile-dropdown-content">
                         <a href="#">Profil</a>
-                        <a href="#">Pengaturan</a>
                         <a href="{{ route('logout') }}">Keluar</a>
                     </div>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <!-- <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
                 <div>
                     <div class="bg-white text-dark px-4 py-3 rounded-4 d-inline-flex align-items-center shadow-sm">
                         <img src="{{ asset('rubber-duck.png') }}" alt="Logo" width="40" class="me-3">
@@ -569,7 +570,7 @@ details[open] {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="page-heading-bantuan">
                 <h1>
@@ -590,6 +591,34 @@ details[open] {
                             Jl. Raya Mayjen Sungkono No.KM 5, Dusun 2, Blater, Kec. Kalimanah, Kabupaten Purbalingga, Jawa Tengah 53371
                         </p>
                     </div>
+                    <div>
+                        <p class="font-bold">Call Center <i class="bi bi-lock-fill text-sm"></i></p>
+                        <p class="info-row"><i class="bi bi-telephone-fill"></i> 085-591-309-511</p>
+                        <p class="info-row"><i class="bi bi-envelope-fill"></i> support@duitto.app</p>
+                    </div>
+                    <div class="social-links">
+                        <span class="font-bold">Temukan Kami</span>
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-tiktok"></i>
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="contact-card-bantuan">
+                    <h2>Get In Touch</h2>
+                    <p>Let us know if you need any help or some message to improve this app</p>
+                    <form class="contact-form-bantuan">
+                        <input type="text" placeholder="Name" />
+                        <input type="email" placeholder="Email" />
+                        <input type="text" placeholder="Subject" />
+                        <textarea rows="4" placeholder="Message"></textarea>
+                        <button type="submit" class="btn btn-peach">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="map-section">
                     <div>
                         <p class="font-bold">Call Center <i class="bi bi-lock-fill text-sm"></i></p>
                         <p class="info-row"><i class="bi bi-telephone-fill"></i> 085-591-309-511</p>

@@ -117,6 +117,62 @@
         .form-control::placeholder {
             color: #d0d3ec;
         }
+                .footer {
+            background-color: #e3e1dc;
+            color: #333;
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white {
+        background-color: #2D3250 !important; /* Changed from white to match the website's purple background */
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
+        font-size: 1.25rem;
+        background: linear-gradient(to right, #fdb88d, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: white; /* Added as fallback */
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white img {
+            width: 30px; /* Adjust size as per image */
+            height: 30px;
+            margin-right: 0.5rem; /* Space between logo and text */
+        }
+
+
+
+        .footer .sponsor,
+        .footer .social-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1rem; /* Spacing between items */
+        }
+
+        .footer .sponsor img,
+        .footer .social-icons i {
+            margin: 0; /* Reset margin from general rule, use gap instead */
+        }
+
+        .footer .social-icons i {
+            font-size: 1.5rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer .social-icons i:hover {
+            color: #2D3250;
+        }
+
     </style>
 </head>
 <body>
@@ -206,6 +262,7 @@
                 </ul>
             </div>
         </div>
+        @include('layouts.footer')
     </div>
 
     <!-- Bootstrap JS -->
