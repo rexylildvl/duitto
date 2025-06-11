@@ -174,12 +174,19 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Adjustments for the footer logo and text for consistency */
         .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white {
-            background-color: white !important; /* Ensure white background */
-            padding: 0.5rem 1rem; /* Adjust padding as per image */
-            border-radius: 2rem; /* Rounded pill shape */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+        background-color: #2D3250 !important; /* Changed from white to match the website's purple background */
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
+        font-size: 1.25rem;
+        background: linear-gradient(to right, #fdb88d, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: white; /* Added as fallback */
         }
 
         .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white img {
@@ -188,12 +195,7 @@
             margin-right: 0.5rem; /* Space between logo and text */
         }
 
-        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
-            font-size: 1.25rem; /* text-xl equivalent */
-            background: linear-gradient(to right, #fdb88d, white);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+
 
         .footer .sponsor,
         .footer .social-icons {
@@ -384,47 +386,133 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
 
-        .manual-section h2,
-        .faq-section h2 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
+        /* General Styling */
+.manual-section, .faq-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 2rem 2rem 2rem 2rem;
+    margin-bottom: 2rem;
+    box-sizing: border-box;
+    color: #2d3748;
+}
 
-        .manual-section .highlight-yellow,
-        .faq-section .highlight-yellow {
-            color: #fdb88d;
-        }
+.highlight-yellow {
+    color: #FFC107;
+}
 
-        .manual-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+}
 
-        @media (min-width: 768px) {
-            .manual-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+h2 span {
+    display: inline-block;
+}
 
-        .manual-list li {
-            display: flex;
-            align-items: center;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-            color: white;
-        }
+/* Manual List Styling */
+.manual-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .manual-list li i {
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-        }
+.manual-list li {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1rem;
+}
 
-        .faq-section {
-            margin-bottom: 4rem;
-        }
+.manual-list li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Details/Spoiler Styling */
+details {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+details[open] {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+summary {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #4a5568;
+    padding: 0.5rem 0;
+    outline: none;
+    position: relative;
+}
+
+summary:hover {
+    color: #2d3748;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary:after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #718096;
+    transition: transform 0.3s ease;
+}
+
+details[open] summary:after {
+    content: "-";
+    transform: rotate(0deg);
+}
+
+details p {
+    margin-top: 0.8rem;
+    color: #4a5568;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+    font-size: 0.95rem;
+}
+
+details strong {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .help-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    
+    .manual-section, .faq-section {
+        margin-bottom: 0;
+    }
+}
+
+/* Animation */
+details[open] {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        
     </style>
 </head>
 <body>
@@ -467,13 +555,12 @@
                     <i class="bi bi-person-circle fs-4"></i>
                     <div class="profile-dropdown-content">
                         <a href="#">Profil</a>
-                        <a href="#">Pengaturan</a>
                         <a href="{{ route('logout') }}">Keluar</a>
                     </div>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <!-- <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
                 <div>
                     <div class="bg-white text-dark px-4 py-3 rounded-4 d-inline-flex align-items-center shadow-sm">
                         <img src="{{ asset('rubber-duck.png') }}" alt="Logo" width="40" class="me-3">
@@ -483,7 +570,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="page-heading-bantuan">
                 <h1>
@@ -532,33 +619,158 @@
             </section>
 
             <section class="map-section">
+                    <div>
+                        <p class="font-bold">Call Center <i class="bi bi-lock-fill text-sm"></i></p>
+                        <p class="info-row"><i class="bi bi-telephone-fill"></i> 085-591-309-511</p>
+                        <p class="info-row"><i class="bi bi-envelope-fill"></i> support@duitto.app</p>
+                    </div>
+                    <div class="social-links">
+                        <span class="font-bold">Temukan Kami</span>
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-tiktok"></i>
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="contact-card-bantuan">
+                    <h2>Get In Touch</h2>
+                    <p>Let us know if you need any help or some message to improve this app</p>
+                    <form class="contact-form-bantuan">
+                        <input type="text" placeholder="Name" />
+                        <input type="email" placeholder="Email" />
+                        <input type="text" placeholder="Subject" />
+                        <textarea rows="4" placeholder="Message"></textarea>
+                        <button type="submit" class="btn btn-peach">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="map-section">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4026880942555!2d109.3090714!3d-7.4206584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6559312b6f4a01%3A0x7d9f7a7d4a4a4a!2sJl.%20Raya%20Mayjen%20Sungkono%20No.KM%205%2C%20Dusun%202%2C%20Blater%2C%20Kec.%20Kalimanah%2C%20Kabupaten%20Purbalingga%2C%20Jawa%20Tengah%2053371!5e0!3m2!1sen!2sid!4v1678912345678!5m2!1sen!2sid"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </section>
 
+        <div class="help-container">
             <section class="manual-section">
                 <h2><span>Manual</span> <span class="highlight-yellow">Pengguna</span></h2>
-                <div class="manual-content">
-                    <ul class="manual-list">
-                        <li><i class="bi bi-chevron-down"></i> Navigasi Umum</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                        <li><i class="bi bi-chevron-down"></i> Menambahkan Transaksi</li>
-                        <li><i class="bi bi-chevron-down"></i> Target Tabungan</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                        <li><i class="bi bi-chevron-down"></i> Cara Masuk dan Daftar</li>
-                    </ul>
-                    <ul class="manual-list">
-                        <li><i class="bi bi-chevron-down"></i> Tidak Bisa Login?</li>
-                        <li><i class="bi bi-chevron-down"></i> Saldo Tidak Berubah?</li>
-                        <li><i class="bi bi-chevron-down"></i> Angka muncul sebagai ?</li>
-                    </ul>
-                </div>
-            </section>
+                    <div class="manual-content">
+                        <ul class="manual-list">
+                        <li>
+                            <details>
+                            <summary> Navigasi Umum</summary>
+                            <p>
+                                Navigasi utama aplikasi terletak di bagian atas atau samping layar dan terdiri dari beberapa menu utama seperti: <strong>Beranda</strong>, <strong>Transaksi</strong>, <strong>Target</strong>, <strong>Statistik</strong>, dan <strong>Profil</strong>. Gunakan menu tersebut untuk berpindah antar halaman dengan cepat dan efisien.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                            <summary> Cara Masuk dan Daftar</summary>
+                            <p>
+                                Untuk mulai menggunakan aplikasi, klik tombol <strong>Masuk</strong> di pojok kanan atas. Jika belum memiliki akun, klik <strong>Daftar</strong> dan isi formulir pendaftaran dengan nama, email aktif, dan kata sandi. Setelah berhasil, Anda akan langsung diarahkan ke beranda aplikasi.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                            <summary> Menambahkan Transaksi</summary>
+                            <p>
+                                Untuk mencatat pemasukan atau pengeluaran, buka menu <strong>Transaksi</strong>, lalu klik <strong>Tambah Transaksi</strong>. Pilih jenis transaksi (pemasukan/pengeluaran), kategori, nominal, tanggal, dan deskripsi. Setelah itu klik <strong>Simpan</strong>. Data akan otomatis tercatat dan memengaruhi saldo Anda.
+                            </p>
+                            </details>
+                        </li>
+                        
+                        <li>
+                            <details>
+                            <summary> Melihat Statistik</summary>
+                            <p>
+                                Di menu <strong>Statistik</strong>, Anda bisa melihat grafik pemasukan dan pengeluaran per bulan, serta distribusi pengeluaran per kategori. Statistik ini membantu Anda memahami pola keuangan dan membuat keputusan yang lebih baik.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                        <details>
+                        <summary> Mengelola Kategori</summary>
+                        <p>
+                            Untuk menyesuaikan jenis kategori transaksi sesuai kebutuhan, masuk ke menu <strong>Pengaturan</strong> > <strong>Manajemen Kategori</strong>. Anda dapat menambahkan kategori baru, mengubah nama kategori, atau menghapus kategori yang tidak lagi digunakan.
+                        </p>
+                        </details>
+                        </li>
+                        <li>
+                            <details>
+                            <summary> Target Tabungan</summary>
+                            <p>
+                                Anda bisa membuat target tabungan dengan masuk ke menu <strong>Target</strong>. Klik <strong>Buat Target</strong>, isi nama target, jumlah nominal, dan tanggal target. Setiap kali Anda menabung, aplikasi akan menghitung dan menampilkan progress pencapaian Anda.
+                            </p>
+                            </details>
+                        </li>
+                        </ul>
+                    </div>
+                </section>
 
             <section class="faq-section">
                 <h2><span>Frequently</span> <span class="highlight-yellow">Ask Question</span></h2>
-                </section>
-            </div>
+                <div class="faq-content">
+                    <ul class="manual-list">
+                        <li>
+                            <details>
+                            <summary> Tidak Bisa Login?</summary>
+                            <p>
+                                Jika Anda tidak dapat masuk, pastikan email dan kata sandi yang dimasukkan sudah benar. Jika lupa kata sandi, klik <strong>Lupa Password</strong> untuk mengatur ulang melalui email. Pastikan koneksi internet stabil dan aplikasi telah diperbarui ke versi terbaru.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                            <summary> Saldo Tidak Berubah?</summary>
+                            <p>
+                                Jika saldo tidak berubah setelah menambahkan transaksi, periksa apakah Anda telah menekan tombol <strong>Simpan</strong>. Coba juga muat ulang halaman. Jika masalah tetap muncul, hubungi tim dukungan melalui menu <strong>Bantuan</strong>.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                            <summary> Angka muncul sebagai "?"</summary>
+                            <p>
+                                Jika angka muncul sebagai tanda tanya (?), hal ini biasanya disebabkan oleh masalah pengaturan regional atau encoding di perangkat. Pastikan perangkat menggunakan <strong>format angka Indonesia</strong> dan aplikasi tidak mengalami kerusakan file. Jika tetap bermasalah, coba gunakan perangkat lain.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                        <details>
+                                <summary> Bagaimana Jika Saya Ganti HP?</summary>
+                                    <p>Anda tetap bisa login dengan akun yang sama di perangkat baru. Semua data tersimpan di cloud, jadi data Anda tidak akan hilang selama Anda menggunakan akun yang sama.</p>
+                            </details>
+                        </li>                 
+                        <li>
+                            <details>
+                            <summary> Saldo Tidak Berubah Setelah Tambah Transaksi?</summary>
+                            <p>
+                                Saldo akan berubah secara otomatis setelah transaksi berhasil ditambahkan. Jika saldo tidak berubah, coba segarkan (refresh) halaman. Pastikan juga transaksi sudah tersimpan dengan meninjaunya di riwayat transaksi.
+                            </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                                <summary>Bagaimana Cara Menghapus Transaksi?</summary>
+                                <p>
+                                    Buka halaman "Riwayat Transaksi", lalu klik ikon tempat sampah di sebelah transaksi yang ingin Anda hapus. Anda akan diminta konfirmasi sebelum transaksi benar-benar dihapus.
+                                </p>
+                            </details>
+                        </li>
+                        <li>
+                            <details>
+                                <summary> Apakah Data Saya Aman?</summary>
+                                    <p>
+                                        Ya. Kami menggunakan enkripsi pada semua data pengguna dan tidak membagikan informasi Anda ke pihak ketiga. Pastikan Anda tidak membagikan kata sandi ke siapa pun untuk menjaga keamanan akun.
+                                    </p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
 
         <div class="footer">
             <div class="d-flex justify-content-center align-items-center mb-3">

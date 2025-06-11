@@ -166,23 +166,52 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        .footer .logo-text {
-            font-weight: bold;
-            font-size: 1.5rem;
-            background: linear-gradient(to right, #fdb88d, #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-left: 0.5rem;
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white {
+        background-color: #2D3250 !important; /* Changed from white to match the website's purple background */
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white .fw-bold {
+        font-size: 1.25rem;
+        background: linear-gradient(to right, #fdb88d, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: white; /* Added as fallback */
+        }
+
+        .footer .d-flex.justify-content-center.align-items-center.mb-3 .bg-white img {
+            width: 30px; /* Adjust size as per image */
+            height: 30px;
+            margin-right: 0.5rem; /* Space between logo and text */
+        }
+
+
+
+        .footer .sponsor,
+        .footer .social-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1rem; /* Spacing between items */
         }
 
         .footer .sponsor img,
         .footer .social-icons i {
-            margin: 0 0.5rem;
+            margin: 0; /* Reset margin from general rule, use gap instead */
         }
 
         .footer .social-icons i {
             font-size: 1.5rem;
+            transition: color 0.3s;
+            cursor: pointer;
         }
+
+        .footer .social-icons i:hover {
+            color: #2D3250;
+        }
+
 
         .top-bar {
             display: flex;
@@ -282,7 +311,6 @@
                     <i class="bi bi-person-circle fs-4"></i>
                     <div class="profile-dropdown-content">
                         <a href="#">Profil</a>
-                        <a href="#">Pengaturan</a>
                         <a href="{{ route('logout') }}">Keluar</a>
                     </div>
                 </div>
@@ -436,38 +464,7 @@
         </div>
 
         <!-- Footer -->
-        <div class="footer">
-        <!-- Logo dan Nama dalam Rounded Box -->
-        <div class="d-flex justify-content-center align-items-center mb-3">
-            <div class="bg-white text-dark px-3 py-2 rounded-pill d-inline-flex align-items-center shadow-sm">
-                <img src="{{ asset('rubber-duck.png') }}" alt="Logo" width="30" class="me-2">
-                <span class="fw-bold" style="font-size: 1.25rem;">Duitto</span>
-            </div>
-        </div>
-
-        <div class="fw-bold text-uppercase small">Sponsored By</div>
-        <div class="sponsor my-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Visa_2021.svg/1920px-Visa_2021.svg.png" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/BI_Logo.png" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/213px-Bank_Mandiri_logo_2016.svg.png" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/960px-Bank_Central_Asia.svg.png" height="30">
-            <img src="https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/200px-BNI_logo.svg.png?20240305030303" height="30">
-        </div>
-
-        <div class="fw-bold text-uppercase small">Contact Us</div>
-        <div class="social-icons mt-2">
-            <i class="bi bi-facebook"></i>
-            <i class="bi bi-twitter-x"></i>
-            <i class="bi bi-instagram"></i>
-            <i class="bi bi-tiktok"></i>
-            <i class="bi bi-youtube"></i>
-        </div>
-    
-        <div class="mt-4 small">&copy;Copyright 2025 all rights reserved.</div>
-    </div>
-
+        @include('layouts.footer')  
     </div>
 
     <!-- Bootstrap JS -->
